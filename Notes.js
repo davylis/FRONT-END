@@ -1,5 +1,5 @@
 
-//Temrins:
+//Temrinology:
 -Conditional rendering=Html modifying by adding text as p, div and etc. with js React
 
 
