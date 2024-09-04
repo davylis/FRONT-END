@@ -24,6 +24,12 @@
                 <React.Fragment>
                 <h3>Counter: {count}</h3>
                 <button onClick={() => setCount(count + 1)}>+</button>
+
+                <button onClick={() => setCount(count - 1)}>-</button>
+
+                <button onClick={() => setCount(0)}>Reset</button>
+
+
                 </React.Fragment>
             );
         }

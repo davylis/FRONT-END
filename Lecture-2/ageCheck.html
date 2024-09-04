@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Programming / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- React component code -->
+     <!-- We don't call a function "setCoun". We reference to a funtion "() => setCount" -->
+    <script type="text/babel">
+        function Registration() {
+            const[person, setPerson] = React.useState({
+                firstName: "",
+                age: "",
+            });
+            const[message, setMessage] = React.useState("");
+
+            const submitForm = (event) => {
+                event.preventDefault();
+                if (person.age >= 18) {
+                    setMessage("Hello " + person.firstName)
+                }else{
+                    setMessage("You are too young")
+                }
+
+            }
+
+
+            return(
+                <React.Fragment>
+                    <p>{message}</p>
+                    <form onSubmit={submitForm}> 
+                        Name:
+                        <input
+                            placeholder="First name"
+                            value={person.firstName}
+                            onChange={event => setPerson({...person, firstName: event.target.value})}
+                        />
+                        <br/>
+                        Age:
+                        <input
+                            placeholder="Age"
+                            value={person.age}
+                            onChange={event => setPerson({...person, age: event.target.value})}
+                         />
+                         <br/>
+                         <input type="submit" value="Submit" />
+                    </form>
+                </React.Fragment>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<Registration/>);
+    </script>
+  </body>
+</html>
