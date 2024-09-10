@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Random Trivia App</title>
+</head>
+
+<body>
+    <!-- Root div for the React app -->
+    <div id="root"></div>
+
+    <!-- Load React, ReactDOM, and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- React code -->
+    <script type="text/babel">
+        function TriviaApp() {
+
+            const [question, setQuestion] = React.useState("");
+            const [answer, setAnswer] = React.useState("");
+            const [showAnswer, setShowAnswer] = React.useState(false); //state to track anwer visibility
+            const [error, setError] = React.useState("");
+
+            const fetchTrivia = () => {
+                setError("");
+                setShowAnswer(false);   // Hide the answer initially when fetching new question
+                setQuestion("");        // Clear previous question
+                setAnswer("");          // Clear previous answer
+
+                //fetch new trivia question
+                fetch("https://opentdb.com/api.php?amount=1")
+                    .then(response => {
+                        if (response.status === 429) {
+                            throw new Error("Please try again in a moment");
+                        }
+                        if (!response.ok) {
+                            throw new Error("Something went wrong");
+                        }
+                        return response.json();
+                    })
+                    .then(responseData => {
+                        const result = responseData.results[0];
+                        setQuestion(result.question); // Set the fetched question
+                        setAnswer(result.correct_answer); // Set the fetched correct answer
+                    })
+                    .catch(error => setError(error.message))
+            };
+            const handleShowAnswer = () => {
+                setShowAnswer(true);
+            };
+
+
+
+            return (
+                <React.Fragment>
+                    {question && <p dangerouslySetInnerHTML={{ __html: question }} />} {/* Display the trivia question */}
+                    {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display any errors */}
+
+                    <form>
+                        <button type="button" onClick={fetchTrivia}>New Question</button> {/* Fetch trivia on button click */}
+                        <button type="button" onClick={handleShowAnswer} disabled={!question} >Show answer</button> {/* Show answer. Can be clicked only after Show question button*/}
+                    </form>
+
+                    {showAnswer && <p>Answer: {answer}</p>} {/* Conditionally show the answer */}
+                </React.Fragment>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<TriviaApp />) //Render trivia app component
+    </script>
+</body>
+
+</html>
