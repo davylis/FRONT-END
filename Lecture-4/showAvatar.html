@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Show avatar</title>
+</head>
+
+<body>
+    <!-- Root div for the React app -->
+    <div id="root"></div>
+
+    <!-- Load React, ReactDOM, and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- React code -->
+    <script type="text/babel">
+        function PersonList() {
+
+            const [listItems, setListItems] = React.useState([]);
+
+            React.useEffect(() => {
+                fetch('https://reqres.in/api/users')
+                    .then(response => {
+                        if (!response.ok)
+                            throw new Error("Error in fetch: " + response.statusText);
+
+                        return response.json();
+                    })
+                    .then(responseData => {
+                        setListItems(responseData.data)
+                    })
+                    .catch(err => console.error(err));
+}, [])
+        return (
+            <div>
+                <h2>Persons</h2>
+                <table>
+                    <tbody>
+                        <tr><th>First name</th><th>Last name</th><th>Email</th></tr>
+                        {listItems.map((person) =>
+                            <tr key={person.id}>
+                                <td>{person.first_name}</td>
+                                <td>{person.last_name}</td>
+                                <td>{person.email}</td>
+                                <td><img src={person.avatar} alt="avatar" width="150"/></td>
+                            </tr>)}
+                    </tbody>
+                </table>
+            </div>
+        );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<PersonList />)
+    </script>
+</body>
+
+</html>

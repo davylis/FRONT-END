@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Github Repos Search</title>
+</head>
+
+<body>
+    <!-- Root div for the React app -->
+    <div id="root"></div>
+
+    <!-- Load React, ReactDOM, and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- React code -->
+    <script type="text/babel">
+        function GithubReposSearch() {
+            const [listItems, setListItems] = React.useState([]);
+            const [keyword, setKeyword] = React.useState('');//State for search keyword
+
+            const handleSearch = () => {
+                if (keyword.trim() === '') {
+                    return;
+                }
+
+                fetch(`https://api.github.com/search/repositories?q=${keyword}`)
+                    .then(response => {
+                        if (!response.ok)
+                            throw new Error("Error in fetch: " + response.statusText);
+                        return response.json();
+                    })
+                    .then(responseData => {
+                        console.log("Fetched Data:", responseData);
+                        setListItems(responseData.items)
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            };
+            return (
+                <div>
+                    <h1>Repositories</h1>
+                    <input type="text"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)} // Update the state on input change
+                        placeholder="Enter repository"
+                    />
+                    <button onClick={handleSearch}>Search</button>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {listItems.length > 0 ? (
+                                listItems.map(repo => (
+                                    <tr key={repo.id}>
+                                        <td>{repo.full_name}</td>
+                                        <td>
+                                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                                                {repo.html_url}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="2">No repositories found</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div >
+
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<GithubReposSearch />)
+    </script>
+</body>
