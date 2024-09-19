@@ -330,6 +330,26 @@ name name   jsncjs@jndcj
 ...
 ...
 
+//Lecture 5
+Book to read: Full Stack development by using Spring Boot
+
+'Third-Party Component'
+The good news is that you don't' have to do everything from the scratch. You can find a lot of third-party components or libraries for React, that are developed and maintained by some developers or organizations.
+
+Sources to find third-party components:
+
+-Google
+-Awesome React: https://github.com/enaqx/awesome-react
+
+When you are using third-party libraries in your React project, you should know how to install them. The installation is done in the project folder using the npm.
+
+commands:
+npm install <package-name>
+npm uninstall <package-names>
+
+ By default, the latest stable version is installed. If needed, you can specify the version number that you want to install.
+
+npm install <package-name>@1.2.3
 
 
 Q for V:
