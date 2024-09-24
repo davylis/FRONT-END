@@ -11,7 +11,7 @@ function TodoTable(props) {
                         <tr key={index}>
                             <td> {todo.description} </td>
                             <td> {todo.duedate} </td>
-                            <td><button onClick={() => props.handleDelete(index)}>Done</button>
+                            <td><button onClick={() => props.handleDelete(index)}>Delete</button>
                             </td>
                         </tr>)
                 }
