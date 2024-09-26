@@ -11,10 +11,25 @@ function Todolist() {
     const gridRef = useRef();
 
     const [colDefs, setColDefs] = useState([
-        { field: "description", filter: true, editable: true },
-        { field: "priority", sortable: true, filter: true,
-            cellStyle: params => params.value === "High" ? {color: 'red'} : {color: 'black'} },
-        { field: "duedate", sortable: true, filter: true }
+        { 
+            field: "description", 
+            filter: true, 
+            editable: true, 
+            floatingFilter: true
+        },
+        { 
+            field: "priority", 
+            sortable: true, 
+            filter: true,
+            floatingFilter: true,
+            cellStyle: params => params.value === "High" ? {color: 'red'} : {color: 'black'} 
+        },
+        { 
+            field: "duedate", 
+            sortable: true, 
+            filter: true, 
+            floatingFilter: true
+        }
         //cellRender delete
        // {
        //     headerName: 'Actions', 
@@ -93,6 +108,7 @@ function Todolist() {
                     rowData={todos}
                     columnDefs={colDefs}
                     rowSelection='single'
+                    animateRows={true}
                 />
             </div>
         </>
