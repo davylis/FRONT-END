@@ -351,6 +351,13 @@ npm uninstall <package-names>
 
 npm install <package-name>@1.2.3
 
+//Lecture 6
+Design tools:
+-React Bootstrap
+-MUI
+-Tailwind
+-AG-GRID?
+
 
 Q for V:
 -Postman?
