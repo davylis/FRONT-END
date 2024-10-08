@@ -12,36 +12,17 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
 function Todolist() {
-  const [todo, setTodo] = useState({
-    description: "",
-    duedate: "",
-    priority: "",
-  });
+  const [todo, setTodo] = useState({description: "", duedate: "", priority: ""});
   const [todos, setTodos] = useState([]);
-
   const gridRef = useRef();
 
   const columns = [
-    {
-      field: "description",
-      filter: true,
-      editable: true,
-      floatingFilter: true,
+    { field: "description", filter: true, editable: true, floatingFilter: true },
+    { field: "priority", sortable: true, filter: true, floatingFilter: true, 
+      cellStyle: (params) => params.value === "High" ? { color: "red" } : { color: "black" },
     },
-    {
-      field: "priority",
-      sortable: true,
-      filter: true,
-      floatingFilter: true,
-      cellStyle: (params) =>
-        params.value === "High" ? { color: "red" } : { color: "black" },
-    },
-    {
-      field: "duedate",
-      sortable: true,
-      filter: true,
-      floatingFilter: true,
-    },
+    { field: "duedate", sortable: true, filter: true, floatingFilter: true, headerName: "Due date",
+      valueFormatter: (params) => dayjs(params.value).format("DD.MM.YYYY") }
   ];
 
   const handleAdd = () => {
@@ -108,11 +89,9 @@ function Todolist() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Due Date"
+            format = "DD.MM.YYYY"
             value={todo.duedate ? dayjs(todo.duedate) : null}
             onChange={handleDateChange}
-            renderInput={(params) => (
-              <TextField variant="standard" {...params} />
-            )}
           />
         </LocalizationProvider>
         <Button variant="contained" onClick={handleAdd}>
