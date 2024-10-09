@@ -1,0 +1,3 @@
+[submodule "todolistbite"]
+	path = todolistbite
+	url = git@github.com:davylis/Todolist-React-App.git
