@@ -1,3 +1,6 @@
 [submodule "todolistbite"]
 	path = todolistbite
 	url = git@github.com:davylis/Todolist-React-App.git
+[submodule "routingwiththreecomponents"]
+	path = routingwiththreecomponents
+	url = git@github.com:davylis/Routing-with-three-components-React-Project.git
